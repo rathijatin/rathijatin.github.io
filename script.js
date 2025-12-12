@@ -4,6 +4,19 @@ document.addEventListener('DOMContentLoaded', () => {
         smooth: true
     });
     if (typeof firstPageAnim === 'function') firstPageAnim();
+
+    // Initialize IST clock in footer if present
+    const istEl = document.getElementById('ist-time');
+    if (istEl) {
+      const fmt = new Intl.DateTimeFormat('en-IN', {
+        hour: '2-digit', minute: '2-digit', hour12: true, timeZone: 'Asia/Kolkata'
+      });
+      const updateIST = () => {
+        istEl.textContent = `${fmt.format(new Date())} IST`;
+      };
+      updateIST();
+      setInterval(updateIST, 30000);
+    }
 });
 
 function firstPageAnim() {

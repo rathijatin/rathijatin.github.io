@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Instakichot • Creative Showcase</title>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.7.0/fonts/remixicon.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Playfair+Display:wght@600;800&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-a: #0b0f1a;
+            --bg-b: #1a1042;
+            --bg-c: #012a4a;
+            --text: #eaf2ff;
+            --muted: #b8c6e3;
+            --accent: #7c5cff;
+            --accent-2: #00e5ff;
+            --glass: rgba(255, 255, 255, 0.08);
+            --glass-stroke: rgba(255, 255, 255, 0.2);
+            --shadow: 0 20px 80px rgba(0, 0, 0, 0.45);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+            color: var(--text);
+            font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+            background: radial-gradient(1200px 800px at 20% 10%, var(--bg-b), transparent 60%),
+                radial-gradient(1000px 700px at 80% 20%, var(--bg-c), transparent 60%),
+                linear-gradient(180deg, var(--bg-a), #05070d 60% 100%);
+            background-attachment: fixed;
+            overflow: hidden;
+        }
+
+        /* Animated gradient sheen */
+        .gradient-sheen {
+            position: fixed;
+            inset: -20vmax;
+            pointer-events: none;
+            z-index: 0;
+            background: conic-gradient(from 180deg at 50% 50%,
+                    rgba(124, 92, 255, .12), rgba(0, 229, 255, .08), rgba(124, 92, 255, .12));
+            filter: blur(60px) saturate(140%);
+            animation: spin 28s linear infinite;
+            opacity: .6;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .noise {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="140" height="140" viewBox="0 0 140 140"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23n)" opacity="0.025"/></svg>');
+            mix-blend-mode: overlay;
+        }
+
+        .wrap {
+            position: relative;
+            z-index: 2;
+            height: 100vh;
+            display: grid;
+            place-items: center;
+            padding: 4vmin 3vmin;
+        }
+
+        .hero {
+            width: min(1100px, 92vw);
+            display: grid;
+            grid-template-columns: 1.1fr .9fr;
+            gap: clamp(20px, 4vw, 48px);
+            align-items: center;
+            justify-items: center;
+        }
+
+        @media (max-width: 900px) {
+            .hero {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Polaroid photo card */
+        .stage {
+            perspective: 1200px;
+        }
+
+        .polaroid {
+            position: relative;
+            background: #fff;
+            color: #111;
+            border-radius: 14px;
+            padding: 16px 16px 46px;
+            box-shadow: var(--shadow);
+            transform-style: preserve-3d;
+            transition: transform .25s ease, box-shadow .25s ease;
+            animation: floaty 7s ease-in-out infinite;
+        }
+
+        .polaroid:hover {
+            box-shadow: 0 30px 120px rgba(0, 0, 0, .55);
+        }
+
+        @keyframes floaty {
+
+            0%,
+            100% {
+                transform: translateY(0) rotateX(0deg) rotateY(0deg);
+            }
+
+            50% {
+                transform: translateY(-10px) rotateX(0.2deg) rotateY(-0.2deg);
+            }
+        }
+
+        .polaroid img {
+            display: block;
+            width: min(560px, 84vw);
+            height: auto;
+            border-radius: 10px;
+            object-fit: cover;
+            aspect-ratio: 4/5;
+        }
+
+        .polaroid .caption {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 10px;
+            text-align: center;
+            font-weight: 700;
+            letter-spacing: .05em;
+        }
+
+        /* Glass info panel */
+        .panel {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(14px) saturate(130%);
+            background: linear-gradient(180deg, rgba(255, 255, 255, .06), rgba(255, 255, 255, .03));
+            border: 1px solid var(--glass-stroke);
+            border-radius: 18px;
+            padding: clamp(18px, 3.4vmin, 28px);
+            box-shadow: var(--shadow);
+        }
+
+        .kicker {
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: .18em;
+            font-weight: 700;
+        }
+
+        h1 {
+            margin: 8px 0 10px;
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: clamp(32px, 6vw, 62px);
+            line-height: 1.05;
+            background: linear-gradient(90deg, #fff, var(--accent-2));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        p {
+            color: var(--muted);
+            font-size: clamp(14px, 1.6vw, 18px);
+            line-height: 1.65;
+        }
+
+        .cta-row {
+            display: flex;
+            gap: 12px;
+            margin-top: 0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            border-radius: 14px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: transform .15s ease, box-shadow .2s ease, background .2s ease;
+            border: 1px solid rgba(255, 255, 255, .18);
+        }
+
+        .btn.primary {
+            background: linear-gradient(135deg, var(--accent), #5b3bff 60%, #7c5cff);
+            color: #fff;
+            box-shadow: 0 10px 30px rgba(124, 92, 255, .35);
+        }
+
+        .btn.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 18px 44px rgba(124, 92, 255, .45);
+        }
+
+        .btn.ghost {
+            background: var(--glass);
+            color: var(--text);
+        }
+
+        .btn.ghost:hover {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, .12);
+        }
+
+        /* Tiny orbiting accents */
+        .orb,
+        .orb2 {
+            position: absolute;
+            filter: blur(18px);
+            border-radius: 50%;
+            mix-blend-mode: screen;
+            opacity: .6;
+            pointer-events: none;
+        }
+
+        .orb {
+            width: 220px;
+            height: 220px;
+            background: radial-gradient(circle, rgba(124, 92, 255, .9), transparent 60%);
+            top: -60px;
+            left: -60px;
+            animation: drift 18s ease-in-out infinite;
+        }
+
+        .orb2 {
+            width: 160px;
+            height: 160px;
+            background: radial-gradient(circle, rgba(0, 229, 255, .9), transparent 60%);
+            bottom: -40px;
+            right: -20px;
+            animation: drift2 22s ease-in-out infinite;
+        }
+
+        @keyframes drift {
+            50% {
+                transform: translate(40px, 30px) scale(1.05);
+            }
+        }
+
+        @keyframes drift2 {
+            50% {
+                transform: translate(-30px, -20px) scale(1.08);
+            }
+        }
+
+        /* Header nav */
+        .topbar {
+            position: fixed;
+            top: 14px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            background: rgba(0, 0, 0, .25);
+            border: 1px solid rgba(255, 255, 255, .12);
+            padding: 8px 12px;
+            border-radius: 999px;
+            backdrop-filter: blur(10px);
+        }
+
+        .topbar a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 14px;
+            opacity: .9;
+        }
+
+        .topbar i {
+            opacity: .8;
+        }
+
+        /* Respect reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+
+            .gradient-sheen,
+            .polaroid,
+            .orb,
+            .orb2 {
+                animation: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="gradient-sheen" aria-hidden="true"></div>
+    <div class="noise" aria-hidden="true"></div>
+
+    <nav class="topbar">
+        <i class="ri-sparkling-2-line"></i>
+        <a href="index.html" title="Back to website"><i class="ri-home-5-line"></i>&nbsp;Back to website</a>
+    </nav>
+
+    <main class="wrap">
+        <section class="hero">
+            <div class="stage">
+                <div class="polaroid" id="card">
+                    <span class="orb" aria-hidden="true"></span>
+                    <span class="orb2" aria-hidden="true"></span>
+                    <img src="1f4bd053b5f693f54e1d952107608494 (1).jpg" alt="Featured photograph" />
+                    <div class="caption">Captured Moment</div>
+                </div>
+            </div>
+            <div class="panel">
+                <div class="cta-row">
+                    <a class="btn ghost" href="#" id="shuffle">
+                        <i class="ri-sparkling-fill"></i> Change Vibes
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const card = document.getElementById('card');
+        const wrap = document.querySelector('.wrap');
+        const shuffle = document.getElementById('shuffle');
+
+        // Tilt interaction
+        function handleMove(e) {
+            const rect = card.getBoundingClientRect();
+            const x = (e.clientX - rect.left) / rect.width; // 0..1
+            const y = (e.clientY - rect.top) / rect.height; // 0..1
+            const rotateY = (x - 0.5) * 14; // deg
+            const rotateX = (0.5 - y) * 12;
+            card.style.transform = `rotateY(${rotateY}deg) rotateX(${rotateX}deg)`;
+        }
+        function resetTilt() { card.style.transform = ''; }
+
+        let motionAllowed = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (motionAllowed) {
+            card.addEventListener('pointermove', handleMove);
+            card.addEventListener('pointerleave', resetTilt);
+        }
+
+        // Palette shuffle for fun
+        const palettes = [
+            ['#0b0f1a', '#1a1042', '#012a4a', '#7c5cff', '#00e5ff'],
+            ['#0a0c1a', '#3b0f1e', '#22092c', '#ff6aa2', '#b388ff'],
+            ['#0b132b', '#1c2541', '#3a506b', '#5bc0be', '#6fffe9']
+        ];
+        function setPalette([a, b, c, acc1, acc2]) {
+            document.documentElement.style.setProperty('--bg-a', a);
+            document.documentElement.style.setProperty('--bg-b', b);
+            document.documentElement.style.setProperty('--bg-c', c);
+            document.documentElement.style.setProperty('--accent', acc1);
+            document.documentElement.style.setProperty('--accent-2', acc2);
+        }
+        shuffle?.addEventListener('click', (e) => {
+            e.preventDefault();
+            const pick = palettes[Math.floor(Math.random() * palettes.length)];
+            setPalette(pick);
+        });
+    </script>
+</body>
+
+</html>
